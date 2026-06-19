@@ -1,0 +1,24 @@
+[submodule "cyber-chef"]
+	path = cyber-chef
+	url = git@github.com:platypod/cyber-chef.git
+	branch = main
+[submodule "infra"]
+	path = infra
+	url = git@github.com:platypod/infra-as-code.git
+	branch = main
+[submodule "mediarvester"]
+	path = mediarvester
+	url = git@github.com:platypod/mediarvester.git
+	branch = main
+[submodule "pokeclicker"]
+	path = pokeclicker
+	url = git@github.com:platypod/pokeclicker.git
+	branch = main
+[submodule "stack"]
+	path = stack
+	url = git@github.com:platypod/services.git
+	branch = dev
+[submodule "transmission-exporter"]
+	path = transmission-exporter
+	url = git@github.com:platypod/transmission-exporter.git
+	branch = main
