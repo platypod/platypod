@@ -17,7 +17,7 @@
 [submodule "stack"]
 	path = stack
 	url = git@github.com:platypod/services.git
-	branch = dev
+	branch = main
 [submodule "transmission-exporter"]
 	path = transmission-exporter
 	url = git@github.com:platypod/transmission-exporter.git

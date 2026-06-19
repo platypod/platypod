@@ -3,11 +3,12 @@ SHELL := bash
 
 REPO   ?= platypod/platypod
 REMOTE ?= git@github.com:$(REPO).git
+BRANCH ?= main
 
 # Space-separated list of every child path registered as a submodule.
 paths   = $(shell git config -f .gitmodules --get-regexp '\.path$$' 2>/dev/null | awk '{print $$2}')
 
-.PHONY: help init add pull update sync status publish
+.PHONY: help init add pull update track track-all sync status publish
 
 help: ## Show this help
 	@echo "platypod umbrella — submodule management"
@@ -53,6 +54,17 @@ update: ## Bump each submodule to the latest commit on its tracked branch; skip 
 		else echo "  skip  $$p (no access / offline)"; fi; \
 	done; \
 	echo "Pointers updated — review 'make status', then 'make sync'."
+
+track: ## Point one submodule at a branch + re-pin to its tip. Usage: make track NAME=stack [BRANCH=main]
+	@test -n "$(NAME)" || { echo "Usage: make track NAME=<submodule> [BRANCH=<branch>]"; exit 1; }
+	@git -C "$(NAME)" fetch origin "$(BRANCH)" >/dev/null 2>&1 || { echo "  skip  $(NAME) (no '$(BRANCH)' on remote / no access)"; exit 0; }
+	@git -C "$(NAME)" checkout -q "$(BRANCH)" && git -C "$(NAME)" merge -q --ff-only "origin/$(BRANCH)" 2>/dev/null || true
+	@git config -f .gitmodules submodule.$(NAME).branch "$(BRANCH)"
+	@git add .gitmodules "$(NAME)"
+	@echo "  $(NAME) tracks $(BRANCH) @ $$(git -C "$(NAME)" rev-parse --short HEAD) (staged — run 'make sync')"
+
+track-all: ## Point every submodule at one branch. Usage: make track-all [BRANCH=main]
+	@for p in $(paths); do $(MAKE) --no-print-directory track NAME=$$p BRANCH=$(BRANCH); done
 
 sync: ## Commit umbrella files + any submodule pointer changes
 	@git add .gitmodules .gitignore Makefile README.md CLAUDE.md .claude $(paths) 2>/dev/null || true; \
