@@ -22,3 +22,7 @@
 	path = transmission-exporter
 	url = git@github.com:platypod/transmission-exporter.git
 	branch = main
+[submodule "prompt-meter"]
+	path = prompt-meter
+	url = git@github.com:platypod/prompt-meter.git
+	branch = main
