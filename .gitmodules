@@ -26,3 +26,6 @@
 	path = prompt-meter
 	url = git@github.com:platypod/prompt-meter.git
 	branch = main
+[submodule "sphaze"]
+	path = sphaze
+	url = git@github.com:platypod/sphaze.git
