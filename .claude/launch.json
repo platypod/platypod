@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "sphaze-dev",
+      "runtimeExecutable": "make",
+      "runtimeArgs": ["-C", "sphaze", "serve"],
+      "port": 8080
+    }
+  ]
+}
