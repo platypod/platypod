@@ -4,7 +4,7 @@
 	branch = main
 [submodule "infra"]
 	path = infra
-	url = git@github.com:platypod/infra-as-code.git
+	url = git@github.com:platypod/infra.git
 	branch = main
 [submodule "mediarvester"]
 	path = mediarvester
