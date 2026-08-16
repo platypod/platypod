@@ -2,10 +2,16 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "sphaze-dev",
+      "name": "unbegotten-dev",
       "runtimeExecutable": "make",
-      "runtimeArgs": ["-C", "sphaze", "serve"],
+      "runtimeArgs": ["-C", "unbegotten", "serve"],
       "port": 8080
+    },
+    {
+      "name": "unbegotten-geodesic-preview",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8096", "--directory", "unbegotten"],
+      "port": 8096
     }
   ]
 }
