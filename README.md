@@ -5,7 +5,8 @@ Personal home-server / homelab. Two subsystems, set up in order:
 1. **[`infra/`](infra/README.md)** — the Kubernetes cluster itself (Talos Linux
    VMs on Apple Silicon macOS, via vfkit + Terraform/OpenTofu).
 2. **[`stack/`](stack/README.md)** — the workload stack deployed onto that cluster
-   (Helm charts via Helmfile).
+   (Helm charts via Flux, Git-driven — see
+   [stack/docs/flux-migration.md](stack/docs/flux-migration.md)).
 
 ## Repo structure
 
@@ -25,11 +26,10 @@ cd infra
 make setup-host          # one-time: install socket_vmnet on this machine
 make apply ENV=local
 
-# 2. Deploy services
+# 2. Deploy services — Git + Flux, see stack/docs/operations.md
 cd ../stack
 make install-deps
-make setup-local         # mkcert CA + TLS secret + Traefik CRDs + core deploy + DNS
-make deploy              # full stack
+make setup-local         # age key + mkcert CA/TLS + Traefik CRDs + Flux bootstrap (all 8 modules) + DNS
 ```
 
 ### First-time prod
@@ -42,18 +42,21 @@ make apply ENV=prod
 
 cd ../stack
 make install-deps
+make setup-age-key
 make install-crds ENV=prd
-make install-csi  ENV=prd
-make deploy ENV=prd
+make flux-sops-secrets ENV=prd
+make flux-bootstrap ENV=prd
+# then arm the semver tag gate — see stack/docs/flux-migration.md Phase 7
 ```
 
 ### Day-to-day
 
 ```sh
-cd infra  && make restart ENV=local         # cluster died after a host reboot
-cd infra  && make rearm-ingress            # public stack down after a router reboot (prod)
-cd stack  && make deploy MODULE=core       # redeploy one module
-cd stack  && make destroy && cd ../infra && make destroy ENV=local   # tear down
+cd infra  && make restart ENV=local                     # cluster died after a host reboot
+cd infra  && make rearm-ingress                         # public stack down after a router reboot (prod)
+flux reconcile helmrelease core -n local-platypod        # force one module to pick up a change now
+git tag vX.Y.Z && git push --tags                       # promote to prod (stack + platypod-sops, lockstep)
+cd stack  && make status && cd ../infra && make destroy ENV=local   # tear down (check nothing's needed first)
 ```
 
 ## Local vs prod at a glance
