@@ -29,3 +29,7 @@
 [submodule "unbegotten"]
 	path = unbegotten
 	url = git@github.com:platypod/unbegotten.git
+[submodule "platypod-sops"]
+	path = platypod-sops
+	url = git@github.com:platypod/platypod-sops.git
+	branch = main
