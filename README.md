@@ -17,18 +17,18 @@ Personal home-server / homelab. Two subsystems, set up in order:
 
 ## End-to-end lifecycle
 
-### First-time dev
+### First-time local
 
 ```sh
 # 1. Provision the cluster
 cd infra
 make setup-host          # one-time: install socket_vmnet on this machine
-make apply ENV=dev
+make apply ENV=local
 
 # 2. Deploy services
 cd ../stack
 make install-deps
-make setup-dev           # mkcert CA + TLS secret + Traefik CRDs + core deploy + DNS
+make setup-local         # mkcert CA + TLS secret + Traefik CRDs + core deploy + DNS
 make deploy              # full stack
 ```
 
@@ -50,20 +50,20 @@ make deploy ENV=prd
 ### Day-to-day
 
 ```sh
-cd infra  && make restart ENV=dev          # cluster died after a host reboot
+cd infra  && make restart ENV=local         # cluster died after a host reboot
 cd infra  && make rearm-ingress            # public stack down after a router reboot (prod)
 cd stack  && make deploy MODULE=core       # redeploy one module
-cd stack  && make destroy && cd ../infra && make destroy ENV=dev   # tear down
+cd stack  && make destroy && cd ../infra && make destroy ENV=local   # tear down
 ```
 
-## Dev vs prod at a glance
+## Local vs prod at a glance
 
-| Concern | dev | prod |
+| Concern | local | prod |
 |---------|-----|------|
 | Hosts | local laptop (1 cp + 1 worker) | mini4 (cp1+w1) + mini1 (w2) |
 | VM subnet | `192.168.122.0/24` | `10.0.2.0/24` (mini4), `10.0.1.0/24` (mini1) |
 | MetalLB pool | `192.168.122.200-220` | `10.0.2.200-220` |
-| Namespace | `dev-platypod` | `prd-platypod` |
+| Namespace | `local-platypod` | `prd-platypod` |
 | Domain | `platypod.local` | `platypod.ovh` |
 | TLS | self-signed wildcard (mkcert) | ACME / Let's Encrypt |
 | DNS | AdGuard + system resolver | public DNS |

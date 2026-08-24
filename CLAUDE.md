@@ -3,11 +3,11 @@
 Personal homelab, two subsystems set up in order:
 
 1. **[`infra/`](infra/README.md)** — the Kubernetes cluster (Talos VMs on Apple
-   Silicon via vfkit + Terraform). dev = laptop; prod = mini4 + mini1.
+   Silicon via vfkit + Terraform). local = laptop; prod = mini4 + mini1.
 2. **[`stack/`](stack/README.md)** — the workloads on top (Helm via Helmfile).
 
 **Start with [README.md](README.md)** for the repo structure, end-to-end
-lifecycle, and the dev-vs-prod table.
+lifecycle, and the local-vs-prod table.
 
 Each subsystem keeps its own thin `CLAUDE.md` pointing at its `README.md` + `docs/`:
 
@@ -33,6 +33,6 @@ one before editing under `infra/` or `stack/`.
 | Adding/editing a service or its Helm chart | [stack/docs/conventions.md](stack/docs/conventions.md) + [stack/CLAUDE.md](stack/CLAUDE.md) rules |
 | What a service is / which module it's in | [stack/docs/services.md](stack/docs/services.md), then `stack/src/<module>/README.md` |
 | Auth (Authelia forward-auth, OIDC, LLDAP) | [stack/docs/authentication.md](stack/docs/authentication.md) |
-| Deploy/lifecycle, dev-vs-prod, PV access | [stack/docs/operations.md](stack/docs/operations.md) |
+| Deploy/lifecycle, local-vs-prod, PV access | [stack/docs/operations.md](stack/docs/operations.md) |
 | `make` targets / variables (stack) | [stack/docs/make-targets.md](stack/docs/make-targets.md) |
 | A custom image (cyber-chef, mediarvester, …) | that dir's `README.md` |
