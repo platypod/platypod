@@ -12,6 +12,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8096", "--directory", "unbegotten"],
       "port": 8096
+    },
+    {
+      "name": "unbegotten-bin",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "18080", "--directory", "unbegotten/bin"],
+      "port": 18080
     }
   ]
 }
