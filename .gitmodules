@@ -33,3 +33,6 @@
 	path = platypod-sops
 	url = git@github.com:platypod/platypod-sops.git
 	branch = main
+[submodule "comix-downloader"]
+	path = comix-downloader
+	url = git@github.com:platypod/comix-downloader.git
