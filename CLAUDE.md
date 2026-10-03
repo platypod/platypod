@@ -15,7 +15,9 @@ Each subsystem keeps its own thin `CLAUDE.md` pointing at its `README.md` + `doc
 - [stack/CLAUDE.md](stack/CLAUDE.md) → chart structure, conventions, services, auth
 
 Custom container images live in `cyber-chef/`, `mediarvester/`, `pokeclicker/`,
-`transmission-exporter/` (built to GHCR, consumed by the stack).
+`transmission-exporter/` (built to GHCR, consumed by the stack). `finance-pipelines/`
+(not yet its own repo/submodule) holds the finance data pipelines; plan in
+[docs/plans/finance-data-platform.md](docs/plans/finance-data-platform.md).
 
 ## Where to look (read the one file, not the whole tree)
 
